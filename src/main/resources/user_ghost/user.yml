@@ -1,0 +1,19 @@
+- userType: qrcodeTeacher
+  username: 00088881111
+  password: 1234qwer
+  loginSystem: mobile-3
+
+- userType: qrcodeStudent
+  username: 00088880001
+  password: 1234qwer
+  loginSystem: ptaxxxsapp
+
+- userType: otherStudent
+  username: 00088880001
+  password: 1234qwer
+  loginSystem: ptaxxxsapp
+
+- userType: wwwManager
+  username: 00088980011
+  password: 1234qwer
+  loginSystem: pc

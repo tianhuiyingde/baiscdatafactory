@@ -1,0 +1,120 @@
+server:
+  port: 9098
+serverEnv: dev
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+#    蜂巢环境
+    url: jdbc:mysql://10.255.101.29:3306/ss_create_class?autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
+    #url: jdbc:mysql://10.255.101.29:3306/ss_create_class?useUnicode=true&useSSL=false&characterEncoding=utf8&autoReconnect=true
+    username: root
+    password: root
+    ##password: mysql001noPK81gc
+    # 使用alibaba的druid连接池、监控
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      max-active: 10
+      max-wait: 5000
+      min-idle: 5
+      initial-size: 2
+      validation-query: SELECT 1
+      validation-query-timeout: 10
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 18800
+      web-stat-filter:
+        enabled: true
+        exclusions: js,gif,jpg,png,css,ico,/druid/*
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: admin
+  jackson:
+    time-zone=GMT+8:
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+
+liveclass:
+  #爱笑管获取token地址
+  axgGetTokenUrl: https://www.aixuexi.com/surrogates/passport/user/login
+  #创建直播课接口
+  createLiveUrl: https://ghostrider.aixuexi.com/ghostrider/api/class/dt/basicInfo
+  #直播课排课接口
+  initScheduleUrl: https://ghostrider.aixuexi.com/ghostrider/api/schedule/initSchedule
+  #直播课上架接口
+  updateClassReleaseUrl: https://ghostrider.aixuexi.com/ghostrider/api/class/updateClassRelease
+  #购买直播课
+  applyClassUrl: https://ghostrider.aixuexi.com/crossfire/fapi/applymanage/apply
+  #直播课课程lessonId获取
+  classLessonIdUrl: http://ghostrider.aixuexi.com/ghostrider/api/class/dt/preview
+  #直播课审批通过
+  applyPassUrl: https://ghostrider.aixuexi.com/crossfire/fapi/applymanage/pass
+
+common:
+  #添加辅导老师
+  selectBySpGradeMust4GroupByAlphaUrl: https://ghostrider.aixuexi.com/ghostrider/api/teacher/selectBySpGradeMust4GroupByAlpha
+  refTeacherUrl: https://ghostrider.aixuexi.com/ghostrider/api/class/refTeacher
+  checkSchedulesUrl: https://ghostrider.aixuexi.com/ghostrider/api/schedule/checkSchedules
+  #根据手机号码查找学生
+  listStudentsUrl: http://ghostrider.aixuexi.com/ghostrider/api/school/manage/listStudents
+  #添加学生
+  refStudentUrl: https://ghostrider.aixuexi.com/ghostrider/api/student/refStudent
+  #查询子课程的subClassId
+  queryDetailsUrl: https://ghostrider.aixuexi.com/crossfire/fapi/applymanage/queryDetails
+  #ai好课单价获取
+  aiClassDetailUrl: https://ghostrider.aixuexi.com/ghostrider/api/aiHaoKe/aiClassPreview
+  #直播课单价获取
+  liveDetailUrl: https://ghostrider.aixuexi.com/ghostrider/api/class/dt/preview
+  #学生信息获取
+  studentListUrl: https://ghostrider.aixuexi.com/ghostrider/api/school/manage/listStudents
+  #学生信息获取
+  studentDetailUrl: https://ghostrider.aixuexi.com/ghostrider/api/school/manage/student/detail
+  #教师id信息获取
+  teacherDetailUrl: https://ghostrider.aixuexi.com/ghostrider/api/account/manage/detail
+  #教师信息获取
+  teacherListUrl: https://ghostrider.aixuexi.com/ghostrider/api/account/manage/list
+itv:
+  #登录生产系统
+  itvLoginUrl: https://itv.aixuexi.com/surrogates/passport/user/login
+  #根据typeid 创建AI好课
+  classTypeById: https://itv.aixuexi.com/aiproduceweb/api/baseData/classTypeById
+  #AI生产系统新建Ai好课
+  itvCreateAiUrl: https://itv.aixuexi.com/aiproduceweb/api/course/create
+  #AI生产系统新建Ai好课的列表展示
+  itvCreateAiUrlList: https://itv.aixuexi.com/aiproduceweb/api/course/list
+  #AI生产系统新建Ai好课publish
+  itvCreateAiPublish: https://itv.aixuexi.com/aiproduceweb/api/course/publish
+  #Ai生产系统讲次列表
+  itvCreateAiLessonList: https://itv.aixuexi.com/aiproduceweb/api/lesson/list
+  #审核讲次
+  itvupdateLessonAuditStatus: https://itv.aixuexi.com/aiproduceweb/api/lesson/updateLessonAuditStatus.do
+
+aiclass:
+  #主讲端新建Ai好课
+  createAiClassUrl: https://ghostrider.aixuexi.com/ghostrider/api/aiHaoKe/dt/basicInfoAi
+  #爱笑管-根据学期展现学科
+  listByPeriodUrl: https://ghostrider.aixuexi.com/ghostrider/api/subjectProduct/listByPeriod
+  #爱笑管-根据学科展现年级
+  listForCreateLiveClassUrl: https://ghostrider.aixuexi.com/ghostrider/api/grade/listForCreateLiveClass
+  #爱笑管-根据年级课程类型展现班型
+  classTypeListUrl: https://ghostrider.aixuexi.com/ghostrider/api/classType/list
+  #爱笑管-保存创建课程设置
+  marketSettingUrl: https://ghostrider.aixuexi.com/ghostrider/api/class/dt/market/setting
+  #爱笑管-保存创建课程设置
+  completionUrl: https://ghostrider.aixuexi.com/ghostrider/api/class/dt/completion
+  #爱笑管-保存创建课程设置
+  dtMarketSettingUrl: https://ghostrider.aixuexi.com/ghostrider/api/class/dt/market/setting
+  #爱笑管-根据班型查询课型信息
+  aiCourseListUrl : https://ghostrider.aixuexi.com/ghostrider/api/aicourse/idname
+  #爱笑管-获取助教信息列表
+  teacherListUrl : https://ghostrider.aixuexi.com/ghostrider/api/teacher/listBySpGradeIns
+  #爱笑管-获取助教信息列表 班级随便默认一个
+  assistantTeacherListUrl : http://ghostrider.aixuexi.com/ghostrider/api/teacher/selectBySpGradeMust4GroupByAlphaWithTrainInfo?classId=1000011299&dtType=6

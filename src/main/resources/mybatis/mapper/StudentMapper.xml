@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aixuexi.ss.service.StudentService" >
+  <resultMap id="BaseResultMap" type="com.aixuexi.ss.entity.Student" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="studentname" property="studentName" jdbcType="VARCHAR" />
+    <result column="institutionid" property="institutionId" jdbcType="INTEGER" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="passport" property="passport" jdbcType="VARCHAR" />
+    <result column="environmenttag" property="environmentTag" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="listStudents" resultType="com.aixuexi.ss.vo.StudentVo">
+    select * from student
+  </select>
+
+  <select id="getStudentById" resultType="com.aixuexi.ss.vo.StudentVo">
+    select * from student where id = #{id}
+  </select>
+
+  <select id="getStudentByTelephone" resultType="com.aixuexi.ss.vo.StudentVo">
+    select * from student
+    <where>
+      <if test="telephone !=null">
+        and telephone = #{telephone,jdbcType=VARCHAR}
+      </if>
+      <if test="environmenttag != null and environmenttag != null">
+        and environmenttag = #{environmenttag,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <select id="getSearchStudent" resultType="com.aixuexi.ss.vo.StudentVo">
+    select * from student
+    <where>
+      <if test="telephone !=null">
+        and telephone = #{telephone,jdbcType=VARCHAR}
+      </if>
+      <if test="environmenttag != null">
+        and environmenttag = #{environmenttag,jdbcType=INTEGER}
+      </if>
+      <if test="studentname != null">
+        and studentname = #{studentname,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <insert id="insertClass" parameterType="com.aixuexi.ss.entity.Student" >
+    insert into student (id, studentname, institutionid,
+    telephone,passport,environmenttag)
+    values (#{id,jdbcType=INTEGER}, #{studentName,jdbcType=VARCHAR}, #{institutionId,jdbcType=INTEGER},
+    #{telephone,jdbcType=VARCHAR}, #{passport,jdbcType=VARCHAR},#{environmentTag,jdbcType=INTEGER})
+  </insert>
+</mapper>

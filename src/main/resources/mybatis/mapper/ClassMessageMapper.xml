@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aixuexi.ss.service.ClassMessageService" >
+  <resultMap id="BaseResultMap" type="com.aixuexi.ss.entity.ClassMessage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="classname" property="className" jdbcType="VARCHAR" />
+    <result column="bigclassid" property="bigClassId" jdbcType="INTEGER" />
+    <result column="studentnumber" property="studentNumber" jdbcType="INTEGER" />
+    <result column="createtime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="begintime" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="classtype" property="classType" jdbcType="INTEGER" />
+    <result column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="lecturerid" property="lecturerId" jdbcType="INTEGER" />
+    <result column="assistantid" property="assistantId" jdbcType="INTEGER" />
+    <result column="studentids" property="studentIds" jdbcType="VARCHAR" />
+    <result column="environmenttag" property="environmentTag" jdbcType="INTEGER" />
+    <collection property="assistants" javaType="java.util.List" ofType="com.aixuexi.ss.entity.Assistant">
+      <result column="atelephone" property="ATelephone" jdbcType="INTEGER" />
+    </collection>
+    <collection property="lecturers" javaType="java.util.List" ofType="com.aixuexi.ss.entity.Lecturer">
+      <result column="ltelephone" property="LTelephone" jdbcType="INTEGER" />
+    </collection>
+    <collection property="users" javaType="java.util.List" ofType="com.aixuexi.ss.entity.User">
+      <result column="username" property="userName" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+
+  <select id="listClassMessages" resultMap="BaseResultMap">
+    select c.id,
+    c.classname,
+    c.bigclassid,
+    c.studentnumber,
+    c.createtime,
+    c.begintime,
+    c.endtime,
+    c.classtype,
+    c.environmenttag,
+    u.username username,
+    lec.ltelephone ltelephone,
+    assist.atelephone atelephone,
+    c.studentids
+    from class c,lecturer lec,myuser u,assistant assist
+    where u.userid=c.userid
+    and lec.id=c.lecturerid
+    and  assist.id=c.assistantid
+  </select>
+
+  <select id="listSearchClassById" resultMap="BaseResultMap">
+    select c.id,
+    c.classname,
+    c.bigclassid,
+    c.studentnumber,
+    c.createtime,
+    c.begintime,
+    c.endtime,
+    c.classtype,
+    c.environmenttag,
+    u.username username,
+    lec.ltelephone ltelephone,
+    assist.atelephone atelephone,
+    c.studentids
+    from class c,lecturer lec,myuser u,assistant assist
+    <where>
+      <if test="bigclassid !=null">
+        and u.userid = c.userid
+      </if>
+      <if test="bigclassid != null">
+        and lec.id=c.lecturerid
+      </if>
+      <if test="bigclassid != null">
+        and  assist.id=c.assistantid
+      </if>
+      <if test="bigclassid !=null">
+        and c.bigclassid = #{bigclassid,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="getSearchAssistant" resultMap="BaseResultMap">
+    select c.id,
+    c.classname,
+    c.bigclassid,
+    c.studentnumber,
+    c.createtime,
+    c.begintime,
+    c.endtime,
+    c.classtype,
+    c.environmenttag,
+    u.username username,
+    lec.ltelephone ltelephone,
+    assist.atelephone atelephone,
+    c.studentids
+    from class c,lecturer lec,myuser u,assistant assist
+    <where>
+      <if test="userid !=null">
+        and u.userid = c.userid
+      </if>
+      <if test="lecturerid != null">
+        and lec.id=c.lecturerid
+      </if>
+      <if test="assistantid != null">
+        and  assist.id=c.assistantid
+      </if>
+      <if test="atelephone !=null">
+        and assist.atelephone = #{atelephone,jdbcType=VARCHAR}
+      </if>
+      <if test="classname != null">
+        and c.classname = #{classname,jdbcType=INTEGER}
+      </if>
+      <if test="environmenttag != null">
+        and c.environmenttag = #{environmenttag,jdbcType=VARCHAR}
+      </if>
+      <if test="ltelephone != null">
+        and lec.ltelephone = #{ltelephone,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="getClassMessageById" resultType="com.aixuexi.ss.vo.ClassMessageVo">
+    select * from class where id = #{id}
+  </select>
+
+  <select id="getSmallClassMsg" resultType="com.aixuexi.ss.entity.SmallClassMsg">
+    select
+    (select count(0) from class)  as counts,
+    c.id,
+    c.classname,
+    c.bigclassid as mainClassId,
+    c.subclassid,
+    c.studentnumber,
+    c.createtime,
+    c.classtype,
+	c.assistantname,
+	c.assistantphone,
+    c.assistantId ,
+    c.lecturerid
+    from class c
+    where 1=1
+    <if test="bigClassId != ''"> and bigclassid =#{bigClassId} </if>
+    <if test="subClassId != ''"> and subclassId =#{subClassId} </if>
+    <if test="classType != ''"> and classtype =#{classType} </if>
+    <if test="className != ''"> and classname like concat('%',#{className},'%') </if>
+
+    order by c.id desc limit #{pageIndex},#{pageSize}
+
+  </select>
+
+
+  <insert id="insertClass" parameterType="com.aixuexi.ss.entity.ClassMessage" >
+    insert into class (id, classname, bigclassid,
+     studentnumber, createtime,
+    begintime, endtime,
+    classtype,userid,lecturerid,assistantid,studentids,environmenttag,assistantname,assistantphone,subclassid)
+    values (#{id,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, #{bigClassId,jdbcType=INTEGER},
+     #{studentNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+    #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+    #{classType,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{lecturerId,jdbcType=INTEGER}, #{assistantId,jdbcType=INTEGER}
+    , #{studentIds,jdbcType=VARCHAR},#{environmentTag,jdbcType=INTEGER},#{assistantName,jdbcType=VARCHAR},#{assistantPhone,jdbcType=VARCHAR},#{subClassId})
+
+
+  </insert>
+</mapper>

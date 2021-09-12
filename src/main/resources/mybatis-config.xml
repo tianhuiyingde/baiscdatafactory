@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <settings>
+       <!--打印查询语句-->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+    <typeAliases>
+        <package name="com.aixuexi"/>
+    </typeAliases>
+    <mappers>
+        <mapper resource="mybatis/mapper/ClassMessageMapper.xml"/>
+        <mapper resource="mybatis/mapper/ClassStudentTeacherMapper.xml"/>
+        <mapper resource="mybatis/mapper/OperationLogMapper.xml"/>
+        <mapper resource="mybatis/mapper/StudentMapper.xml"/>
+        <mapper resource="mybatis/mapper/AssistantMapper.xml"/>
+        <mapper resource="mybatis/mapper/LecturerMapper.xml"/>
+        <mapper resource="mybatis/mapper/UserMapper.xml"/>
+    </mappers>
+
+</configuration>

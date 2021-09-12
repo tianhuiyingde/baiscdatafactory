@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aixuexi.ss.service.ClassStudentTeacherService" >
+  <resultMap id="BaseResultMap" type="com.aixuexi.ss.entity.ClassStudentTeacher" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="classid" property="classId" jdbcType="VARCHAR" />
+    <result column="assistantteacherid" property="assistantTeacherId" jdbcType="INTEGER" />
+    <result column="lecturerteacherid" property="lecturerTeacherId" jdbcType="INTEGER" />
+    <result column="stedentlist" property="stedentList" jdbcType="INTEGER" />
+    <result column="environmenttag" property="environmentTag" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="listClassStudentTeachers" resultType="com.aixuexi.ss.vo.ClassStudentTeacherVo">
+    select * from class_student_teacher
+  </select>
+
+  <select id="getClassStudentTeacherById" resultType="com.aixuexi.ss.vo.ClassStudentTeacherVo">
+    select * from class_student_teacher where id = #{id}
+  </select>
+
+  <insert id="insertClass" parameterType="com.aixuexi.ss.entity.ClassStudentTeacher" >
+    insert into class_student_teacher (id, class_id, assistant_teacher_id,
+    lecturer_teacher_id, stedent_list,environmenttag)
+    values (#{id,jdbcType=INTEGER}, #{classId,jdbcType=VARCHAR}, #{assistantTeacherId,jdbcType=INTEGER},
+    #{lecturerTeacherId,jdbcType=INTEGER}, #{stedentList,jdbcType=INTEGER},#{environmentTag,jdbcType=INTEGER})
+  </insert>
+</mapper>

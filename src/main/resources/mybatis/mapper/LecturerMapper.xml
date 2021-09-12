@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aixuexi.ss.service.LecturerService" >
+  <resultMap id="BaseResultMap" type="com.aixuexi.ss.entity.Lecturer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="Lecturertype" property="LecturerType" jdbcType="INTEGER" />
+    <result column="passport" property="passport" jdbcType="VARCHAR" />
+    <result column="ltelephone" property="LTelephone" jdbcType="VARCHAR" />
+    <result column="institutionId" property="userId" jdbcType="INTEGER" />
+    <result column="environmenttag" property="environmentTag" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="listLecturers" resultType="com.aixuexi.ss.vo.LecturerVo">
+    select * from lecturer
+  </select>
+
+  <select id="getLecturerById" resultType="com.aixuexi.ss.vo.LecturerVo">
+    select * from lecturer where id = #{id}
+  </select>
+
+  <select id="getSearchLecturer" resultType="com.aixuexi.ss.vo.LecturerVo">
+    select * from lecturer
+    <where>
+      <if test="ltelephone !=null">
+        and ltelephone = #{ltelephone,jdbcType=VARCHAR}
+      </if>
+      <if test="environmenttag != null">
+        and environmenttag = #{environmenttag,jdbcType=INTEGER}
+      </if>
+      <if test="nickname != null">
+        and nickname = #{nickname,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <insert id="insertClass" parameterType="com.aixuexi.ss.entity.Lecturer" >
+    insert into lecturer (id, nickname, userid,
+    passport,ltelephone,institutionId,environmenttag,subjectName)
+    values (#{id,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
+    #{passport,jdbcType=VARCHAR},#{LTelephone,jdbcType=VARCHAR},#{institutionId,jdbcType=INTEGER},#{environmentTag,jdbcType=INTEGER},#{subjectName,jdbcType=VARCHAR})
+  </insert>
+</mapper>
